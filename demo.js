@@ -3,10 +3,16 @@ function init() {
   game_over = false;
 
   canvas = document.getElementById("mycanvas");
-  w = h = canvas.width = canvas.height = 1100;
+  w = h = canvas.width = canvas.height = 900;
   pen = canvas.getContext("2d");
   cs = 66;
   food = getfood();
+  food_img = new Image();
+	food_img.src = "images/apple.jpg";
+
+	trophy = new Image();
+	trophy.src = "images/trophy.png";
+
 
   snake = {
     init_lenght: 4,
@@ -39,6 +45,7 @@ function init() {
 
       if (this.cells[0].a == food.x && this.cells[0].b == food.y) {
         food = getfood();
+        score++;
         console.log("food eaten");
       } else {
         this.cells.pop();
@@ -110,10 +117,16 @@ function drawfood() {
 
 function draw() {
   pen.clearRect(0, 0, w, h);
-
   snake.drawsnake();
-  pen.fillStyle = food.color;
-  drawfood();
+
+  pen.drawImage(food_img,food.x*cs,food.y*cs,cs,cs);
+
+	pen.drawImage(trophy,18,20,cs,cs);
+	pen.fillStyle = "blue";
+	pen.font = "20px sansserif"
+    pen.fillText(score,50,50);
+    
+  
 }
 function update() {
   snake.updatesnake();
